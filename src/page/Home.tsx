@@ -1,11 +1,25 @@
 import styled from "styled-components";
-import cover from "../assets/image.png";
-import { Link } from "react-router-dom";
+import cover from "../assets/cover.png";
 import highlight from "../assets/highlight.png";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
+import { useEffect } from "react";
 
 const Home = () => {
+  useEffect(() => {
+    const wave = document.querySelector(".wave") as HTMLElement;
+    wave.style.display = "block";
+
+    return () => {};
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -100 }}
+    >
       <div className="hero">
         <p>Best Online Store Of The Year</p>
         <h1>We don't do fashion, we are fashion</h1>
@@ -14,21 +28,20 @@ const Home = () => {
           Shop now
         </Link>
       </div>
-      <img src={cover} />
+      <img className="cover" src={cover} />
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   display: flex;
-  margin: auto;
   justify-content: space-around;
+  margin: auto;
   gap: 50px;
   .hero {
     position: relative;
     display: flex;
     flex-direction: column;
-
     width: 500px;
     p {
       color: #7b7b7b;
@@ -64,8 +77,36 @@ const Wrapper = styled.div`
       }
     }
   }
-  img {
+  .cover {
+    pointer-events: none;
     width: 600px;
+  }
+  @media only screen and (max-width: 800px) {
+    flex-direction: column-reverse;
+    display: block;
+    margin: 0 0 0 0;
+    .highlight {
+      display: none;
+    }
+    .hero {
+      align-items: center;
+      width: 100vw;
+      padding: 60px 15px;
+      p {
+        font-size: 1rem;
+      }
+      h1 {
+        text-align: center;
+        font-size: 3rem;
+      }
+      .goto {
+        margin-top: 40px;
+        width: max-content;
+      }
+    }
+    .cover {
+      display: none;
+    }
   }
 `;
 

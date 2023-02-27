@@ -27,6 +27,16 @@ const Wrapper = styled.div`
   a {
     text-decoration: none;
     color: white;
+    transition: transform 200ms ease-in-out;
+    &:active,
+    :hover {
+      transform: scale(1.1);
+    }
+    @media (hover) {
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
   }
   nav {
     padding: 20px 100px;
@@ -48,14 +58,14 @@ const Wrapper = styled.div`
           display: flex;
           align-items: center;
           justify-content: center;
+          width: 55px;
+          height: 55px;
           border-radius: 50px;
-          width: 60px;
-          border: none;
-          height: 60px;
-          background-color: white;
           transition: transform 200ms ease-in-out;
           cursor: pointer;
           svg {
+            pointer-events: none;
+            background-color: white;
             color: black;
             font-size: 1.8rem;
           }
@@ -77,8 +87,6 @@ const Wrapper = styled.div`
       flex-direction: column;
       ul {
         width: 90%;
-        li {
-        }
       }
     }
   }
