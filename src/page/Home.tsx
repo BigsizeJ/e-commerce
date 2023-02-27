@@ -81,7 +81,7 @@ const Wrapper = styled(motion.div)`
     pointer-events: none;
     width: 600px;
   }
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 850px) {
     flex-direction: column-reverse;
     display: block;
     margin: 0 0 0 0;
