@@ -25,6 +25,7 @@ const Store = () => {
 
 const Wrapper = styled(motion.div)`
   height: 100%;
+  width: 100%;
   padding: 50px 100px 25px 100px;
   display: grid;
   grid-column-gap: 20px;
@@ -33,6 +34,12 @@ const Wrapper = styled(motion.div)`
   grid-template-columns: 20% 80%;
   grid-template-rows: 1fr;
   z-index: 2;
+  @media only screen and (max-width: 850px) {
+    padding: 20px;
+    grid-template-rows: 1fr 1fr;
+    grid-row-gap: 10px;
+    grid-template-columns: 1fr;
+  }
 `;
 
 export default Store;
