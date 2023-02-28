@@ -19,9 +19,9 @@ const Cart = ({ props }: Props) => {
     >
       <CartModal
         initial={{ x: "110vw" }}
-        animate={{ x: 0 }}
-        exit={{ x: "110vw", transition: { duration: 1 } }}
-        transition={{ duration: 1.5 }}
+        animate={{ x: 0, transition: { delay: 0.5, duration: 1 } }}
+        exit={{ x: "110vw" }}
+        transition={{ duration: 1 }}
       >
         <h1>Hello</h1>
 
@@ -42,6 +42,14 @@ const Wrapper = styled(motion.div)`
   display: flex;
   justify-content: flex-end;
   background-color: rgba(0, 0, 0, 0.5);
+  @media only screen and (max-width: 850px) {
+    padding: 20px;
+    align-items: center;
+    div {
+      height: 60%;
+      width: 100%;
+    }
+  }
 `;
 
 const CartModal = styled(motion.div)`

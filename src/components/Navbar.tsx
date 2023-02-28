@@ -22,7 +22,7 @@ const Navbar = () => {
             </button>
           </li>
         </ul>
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {cart && <Cart props={{ cart, showCart }} />}
         </AnimatePresence>
       </nav>
