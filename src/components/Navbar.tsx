@@ -60,6 +60,7 @@ const Wrapper = styled.div`
           justify-content: center;
           width: 55px;
           height: 55px;
+          border: none;
           border-radius: 50px;
           transition: transform 200ms ease-in-out;
           cursor: pointer;
