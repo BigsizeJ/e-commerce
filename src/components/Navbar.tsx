@@ -69,6 +69,7 @@ const Wrapper = styled.div`
           height: 55px;
           border: none;
           border-radius: 50px;
+          background-color: whitesmoke;
           transition: transform 200ms ease-in-out;
           cursor: pointer;
           svg {

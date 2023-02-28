@@ -1,9 +1,21 @@
+import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
-const Filter = () => {
+interface SearchProps {
+  props: {
+    search: string;
+    setSearch: Dispatch<SetStateAction<string>>;
+  };
+}
+
+const Filter = ({ props }: SearchProps) => {
   return (
     <Wrapper>
-      <input type={"search"} placeholder={"Search Product"} />
+      <input
+        type={"search"}
+        placeholder={"Search Product"}
+        onChange={(e) => props.setSearch(e.target.value)}
+      />
     </Wrapper>
   );
 };
@@ -15,10 +27,10 @@ const Wrapper = styled.div`
   input {
     outline: none;
     padding: 1px 3px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-family: Poppins;
     border: none;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #e5e5e5;
     width: 100%;
   }
 `;

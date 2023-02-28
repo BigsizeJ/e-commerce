@@ -2,23 +2,30 @@ import styled from "styled-components";
 import Filter from "../components/Filter";
 import Product from "../components/Product";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const Store = () => {
+interface SearchProps {
+  props: string;
+}
+
+const Store = ({ props }: SearchProps) => {
+  const [search, setSearch] = useState<string>("");
+
   useEffect(() => {
     const wave = document.querySelector(".wave") as HTMLElement;
     wave.style.display = "none";
 
     return () => {};
   }, []);
+
   return (
     <Wrapper
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
     >
-      <Filter />
-      <Product />
+      <Filter props={{ search, setSearch }} />
+      <Product props={{ search }} />
     </Wrapper>
   );
 };

@@ -3,14 +3,16 @@ import cover from "../assets/cover.png";
 import highlight from "../assets/highlight.png";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
 import { useEffect } from "react";
+import { useStore } from "../hooks/customHooks";
+import { StoreAction } from "../context/StoreContext";
 
 const Home = () => {
+  const { dispatch } = useStore();
   useEffect(() => {
     const wave = document.querySelector(".wave") as HTMLElement;
     wave.style.display = "block";
-
+    dispatch({ type: StoreAction.GET, payload: null });
     return () => {};
   }, []);
 

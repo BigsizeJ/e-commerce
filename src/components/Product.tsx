@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
 
 import axios from "axios";
+import { useStore } from "../hooks/customHooks";
+import { StoreAction } from "../context/StoreContext";
 
 interface Product {
   title: string;
@@ -10,17 +12,23 @@ interface Product {
   price: string;
 }
 
-const Product = () => {
+interface Prop {
+  props: { search: string };
+}
+
+const Product = ({ props }: Prop) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [subscribe, setSubscribe] = useState<boolean>(true);
-  const [data, setData] = useState<Product[]>([]);
+  const { products, dispatch } = useStore();
   useEffect(() => {
     const fetch = async () => {
+      if (products === null) setSubscribe(true);
       if (subscribe) {
         try {
           const product = await axios.get("https://fakestoreapi.com/products");
           const data = await product.data;
-          setData(data);
+          dispatch({ type: StoreAction.GET, payload: data });
+
           setLoading(false);
         } catch (error) {}
       }
@@ -30,15 +38,20 @@ const Product = () => {
     return () => setSubscribe(false);
   });
 
+  const filteredSearchProducts = (products || []).filter((prod: Product) =>
+    prod.title.toLowerCase().includes(props.search.toLowerCase())
+  );
+
   return (
     <Wrapper>
       <div className="prod-grid">
-        {data &&
-          data.map((prod) => (
+        {products &&
+          filteredSearchProducts.map((prod: Product) => (
             <div className="prod-item">
               <div className="prod-img">
                 <img className="prod-img" src={prod.image} alt="" />
               </div>
+              <div className="divider"></div>
               <div className="prod-hero">
                 <p>{prod.title}</p>
                 <button>Add to cart</button>
@@ -69,9 +82,14 @@ const Wrapper = styled.div`
   }
   .prod-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 
     grid-gap: 10px;
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: #e5e5e5;
+    }
     .prod-item {
       width: 100%;
       display: flex;
@@ -79,8 +97,8 @@ const Wrapper = styled.div`
       justify-content: space-between;
 
       flex-direction: column;
-      border: 2px solid black;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
       .prod-img {
         flex: 1;
         display: flex;
@@ -98,8 +116,7 @@ const Wrapper = styled.div`
         display: flex;
         flex-direction: column;
         padding: 10px;
-        color: white;
-        background-color: black;
+        color: black;
         p {
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -112,8 +129,10 @@ const Wrapper = styled.div`
           font-family: PoppinsBold;
           font-size: 1rem;
           border: none;
-          background-color: white;
 
+          background-color: black;
+
+          color: white;
           cursor: pointer;
         }
       }

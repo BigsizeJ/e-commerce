@@ -3,14 +3,17 @@ import Navbar from "./components/Navbar";
 import { FontStyle } from "./styles/GlobalStyles";
 import wave from "./assets/wave.png";
 import AnimatedRoute from "./page/AnimatedRoute";
+import { StoreProvider } from "./context/StoreContext";
 
 const App = () => {
   return (
     <Wrapper>
-      <FontStyle />
-      <Navbar />
-      <AnimatedRoute />
-      <img className="wave" src={wave} />
+      <StoreProvider>
+        <FontStyle />
+        <Navbar />
+        <AnimatedRoute />
+        <img className="wave" src={wave} />
+      </StoreProvider>
     </Wrapper>
   );
 };

@@ -1,6 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { FaShoppingCart } from "react-icons/fa";
 
 interface Props {
   props: {
@@ -10,6 +11,8 @@ interface Props {
 }
 
 const Cart = ({ props }: Props) => {
+  const [empty, isEmpty] = useState<boolean>(true);
+
   return (
     <Wrapper
       initial={{ x: "-100vw" }}
@@ -23,8 +26,8 @@ const Cart = ({ props }: Props) => {
         exit={{ x: "110vw" }}
         transition={{ duration: 1 }}
       >
-        <h1>Hello</h1>
-
+        <h1>Your shopping cart</h1>
+        {empty && <FaShoppingCart />}
         <button onClick={() => props.showCart(false)}>Close</button>
       </CartModal>
     </Wrapper>
@@ -59,11 +62,26 @@ const CartModal = styled(motion.div)`
   justify-content: space-between;
   padding: 50px 20px;
   width: 25%;
+  position: relative;
+  h1 {
+    font-size: 1.5rem;
+    font-family: PoppinsBold;
+    text-align: center;
+  }
+  svg {
+    color: #e5e5e5;
+    margin: auto;
+    inset: 0 0 0 0;
+    font-size: 10rem;
+    position: absolute;
+  }
   button {
+    border: none;
     background-color: black;
     font-family: PoppinsBold;
     color: White;
     font-size: 1.5rem;
+    text-transform: uppercase;
     cursor: pointer;
     transition: 200ms ease-in-out;
     &:hover {
