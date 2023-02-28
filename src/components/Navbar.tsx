@@ -65,7 +65,6 @@ const Wrapper = styled.div`
           cursor: pointer;
           svg {
             pointer-events: none;
-            background-color: white;
             color: black;
             font-size: 1.8rem;
           }
