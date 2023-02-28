@@ -111,6 +111,9 @@ const Wrapper = styled.div`
         button {
           font-family: PoppinsBold;
           font-size: 1rem;
+          border: none;
+          background-color: white;
+
           cursor: pointer;
         }
       }

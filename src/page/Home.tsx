@@ -38,6 +38,7 @@ const Wrapper = styled(motion.div)`
   justify-content: space-around;
   margin: auto;
   gap: 50px;
+
   .hero {
     position: relative;
     display: flex;

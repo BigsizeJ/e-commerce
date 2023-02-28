@@ -32,10 +32,6 @@ const Wrapper = styled.div`
   font-family: Poppins;
 
   @media only screen and (max-width: 800px) {
-    main {
-      flex: 1;
-      justify-content: flex-start;
-    }
     .wave {
       height: 15%;
     }

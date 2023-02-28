@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
+import Cart from "./Cart";
+import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
+  const [cart, showCart] = useState<boolean>(false);
   return (
     <Wrapper>
       <nav>
@@ -13,11 +17,14 @@ const Navbar = () => {
           <li>
             <Link to={"/shop"}>Shop</Link>
             <Link to={"/about"}>About</Link>
-            <button className="cart">
+            <button className="cart" onClick={() => showCart(true)}>
               <FaShoppingCart />
             </button>
           </li>
         </ul>
+        <AnimatePresence>
+          {cart && <Cart props={{ cart, showCart }} />}
+        </AnimatePresence>
       </nav>
     </Wrapper>
   );
