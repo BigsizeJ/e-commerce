@@ -4,11 +4,7 @@ import Product from "../components/Product";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-interface SearchProps {
-  props: string;
-}
-
-const Store = ({ props }: SearchProps) => {
+const Store = () => {
   const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
