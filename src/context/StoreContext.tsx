@@ -14,10 +14,12 @@ interface Product {
 
 interface State {
   products: Product[] | null | {};
+  cart: Product[] | null | {};
 }
 
 export enum StoreAction {
   GET = "get",
+  ADD_TO_CART = "addToCart",
 }
 
 interface Action {
@@ -32,6 +34,11 @@ const StoreReducer = (state: State, action: Action) => {
         ...state,
         products: action.payload,
       };
+    case StoreAction.ADD_TO_CART:
+      return {
+        ...state,
+        cart: [action.payload, ...(state.cart as [])],
+      };
     default:
       return state;
   }
@@ -40,6 +47,7 @@ const StoreReducer = (state: State, action: Action) => {
 export const StoreProvider = ({ children }: Children) => {
   const [state, dispatch] = useReducer<Reducer<State, Action>>(StoreReducer, {
     products: null,
+    cart: [],
   });
 
   return (

@@ -10,6 +10,7 @@ interface Product {
   title: string;
   image: string;
   price: string;
+  qty: number;
 }
 
 interface Prop {
@@ -19,7 +20,23 @@ interface Prop {
 const Product = ({ props }: Prop) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [subscribe, setSubscribe] = useState<boolean>(true);
-  const { products, dispatch } = useStore();
+  const { products, cart, dispatch } = useStore();
+
+  const addToCart = (product: Product) => {
+    product.qty = 1;
+    const isExisted = cart.filter(
+      (prod: Product) => prod.title === product.title
+    )[0];
+    if (isExisted) {
+      cart.map((prod: Product) => {
+        if (prod.title === product.title)
+          return { ...prod, qty: (prod.qty += 1) };
+      });
+    } else {
+      dispatch({ type: StoreAction.ADD_TO_CART, payload: product });
+    }
+  };
+
   useEffect(() => {
     const fetch = async () => {
       if (products === null) setSubscribe(true);
@@ -54,7 +71,7 @@ const Product = ({ props }: Prop) => {
               <div className="divider"></div>
               <div className="prod-hero">
                 <p>{prod.title}</p>
-                <button>Add to cart</button>
+                <button onClick={() => addToCart(prod)}>Add to cart</button>
               </div>
             </div>
           ))}
