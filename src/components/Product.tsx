@@ -71,6 +71,7 @@ const Product = ({ props }: Prop) => {
               <div className="divider"></div>
               <div className="prod-hero">
                 <p>{prod.title}</p>
+                <p className="prod-price">PHP {prod.price}</p>
                 <button onClick={() => addToCart(prod)}>Add to cart</button>
               </div>
             </div>
@@ -112,7 +113,6 @@ const Wrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       flex-direction: column;
       border: 1px solid #e5e5e5;
       border-radius: 10px;
@@ -128,7 +128,6 @@ const Wrapper = styled.div`
         }
       }
       .prod-hero {
-        gap: 10px;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -142,11 +141,15 @@ const Wrapper = styled.div`
           font-family: Poppins;
           font-size: 1.2rem;
         }
+        .prod-price {
+          font-family: PoppinsBold;
+        }
         button {
+          margin-top: 5px;
           font-family: PoppinsBold;
           font-size: 1rem;
           border: none;
-
+          padding: 5px;
           background-color: black;
 
           color: white;

@@ -72,9 +72,13 @@ const Cart = ({ props }: Props) => {
             })}
           </div>
         )}
-        <p className="cart-subtotal">
-          Subtotal: <span>PHP {subTotal.toLocaleString("en-US")}</span>
-        </p>
+        {cart.length > 0 ? (
+          <p className="cart-subtotal">
+            Subtotal: <span>PHP {subTotal.toLocaleString("en-US")}</span>
+          </p>
+        ) : (
+          <></>
+        )}
         <div className="btn-ctn">
           {cart && <button className="cart-checkout">checkout</button>}
           <button className="close" onClick={() => props.showCart(false)}>
@@ -169,6 +173,7 @@ const CartModal = styled(motion.div)`
     }
   }
   .cart-list {
+    flex: 1;
     width: 100%;
     display: grid;
     grid-template-rows: repeat(auto-fill, minmax(60px, 1fr));
