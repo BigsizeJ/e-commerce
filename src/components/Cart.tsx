@@ -28,21 +28,21 @@ const Cart = ({ props }: Props) => {
   };
 
   const handleCartChange = (product: Product, type: string) => {
-    switch (type) {
-      case "reduce":
-        const decrement = product.qty - 1;
-        if (decrement <= 0) {
-          dispatch({ type: StoreAction.REMOVE_TO_CART, cart: product });
-        } else {
-          dispatch({
-            type: StoreAction.DECREMENT_PRODUCT_CART,
-            cart: product,
-          });
-        }
-        break;
-      case "increase":
-        dispatch({ type: StoreAction.INCREMENT_PRODUCT_CART, cart: product });
-        break;
+    if (type === "increment") {
+      return dispatch({
+        type: StoreAction.INCREMENT_PRODUCT_CART,
+        cart: product,
+      });
+    } else if (type === "decrement") {
+      const decrement = product.qty - 1;
+      if (decrement <= 0) {
+        return dispatch({ type: StoreAction.REMOVE_TO_CART, cart: product });
+      } else {
+        return dispatch({
+          type: StoreAction.DECREMENT_PRODUCT_CART,
+          cart: product,
+        });
+      }
     }
   };
 
@@ -75,14 +75,14 @@ const Cart = ({ props }: Props) => {
                   <div className="prod-left">
                     <button
                       className="decrease"
-                      onClick={() => handleCartChange(prod, "reduce")}
+                      onClick={() => handleCartChange(prod, "decrement")}
                     >
                       -
                     </button>
                     <p className="qty">{prod.qty}</p>
                     <button
                       className="increase"
-                      onClick={() => handleCartChange(prod, "increase")}
+                      onClick={() => handleCartChange(prod, "increment")}
                     >
                       +
                     </button>
