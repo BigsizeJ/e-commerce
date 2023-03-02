@@ -219,6 +219,7 @@ const CartModal = styled(motion.div)`
         align-items: center;
         button {
           align-items: center;
+          justify-content: center;
           display: flex;
           width: 1.5rem;
           height: 1.5rem;
