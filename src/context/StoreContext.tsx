@@ -1,23 +1,7 @@
-import { createContext, Reducer, useReducer } from "react";
+import React, { createContext, Reducer, useReducer } from "react";
+import { Product } from "../Types";
 
 export const StoreContext = createContext<any>({});
-
-interface Children {
-  children: React.ReactNode;
-}
-
-interface Product {
-  title: string;
-  image: string;
-  price: string;
-  qty: number;
-  id: string;
-}
-
-interface State {
-  products: Product[] | null | {};
-  cart: Product[] | null | {};
-}
 
 export enum StoreAction {
   GET = "get",
@@ -25,6 +9,11 @@ export enum StoreAction {
   REMOVE_TO_CART = "removeToCart",
   INCREMENT_PRODUCT_CART = "incrementProductCart",
   DECREMENT_PRODUCT_CART = "decrementProductCart",
+}
+
+interface State {
+  products: Product[] | null | {};
+  cart: Product[] | null | {};
 }
 
 interface Action {
@@ -76,7 +65,7 @@ const StoreReducer = (state: State, action: Action) => {
   }
 };
 
-export const StoreProvider = ({ children }: Children) => {
+export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer<Reducer<State, Action>>(StoreReducer, {
     products: null,
     cart: [],

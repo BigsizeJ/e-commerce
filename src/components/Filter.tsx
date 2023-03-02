@@ -22,7 +22,6 @@ const Filter = ({ props }: SearchProps) => {
 
 const Wrapper = styled.div`
   height: 60%;
-
   padding: 0px 20px;
   input {
     outline: none;

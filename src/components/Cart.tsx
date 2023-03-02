@@ -4,20 +4,13 @@ import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
 import { useStore } from "../hooks/customHooks";
 import { StoreAction } from "../context/StoreContext";
+import { Product } from "../Types";
 
 interface Props {
   props: {
     showCart: boolean;
     setShowCart: Dispatch<SetStateAction<boolean>>;
   };
-}
-
-interface Product {
-  title: string;
-  image: string;
-  price: string;
-  qty: number;
-  id: string;
 }
 
 const Cart = ({ props }: Props) => {
@@ -81,7 +74,7 @@ const Cart = ({ props }: Props) => {
                 <div className="cart-item" key={prod.id}>
                   <div className="prod-left">
                     <button
-                      className="reduce"
+                      className="decrease"
                       onClick={() => handleCartChange(prod, "reduce")}
                     >
                       -
@@ -215,7 +208,8 @@ const CartModal = styled(motion.div)`
         gap: 10px;
         display: flex;
         align-items: center;
-        button {
+        .decrease,
+        .increase {
           align-items: center;
           justify-content: center;
           display: flex;

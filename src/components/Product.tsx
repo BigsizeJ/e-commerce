@@ -1,24 +1,12 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
-
 import axios from "axios";
 import { useStore } from "../hooks/customHooks";
 import { StoreAction } from "../context/StoreContext";
+import { Product } from "../Types";
 
-interface Product {
-  title: string;
-  image: string;
-  price: string;
-  qty: number;
-  id: string;
-}
-
-interface Prop {
-  props: { search: string };
-}
-
-const Product = ({ props }: Prop) => {
+const Product = ({ props }: { props: { search: string } }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [subscribe, setSubscribe] = useState<boolean>(true);
   const { products, cart, dispatch } = useStore();
