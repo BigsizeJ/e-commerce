@@ -104,12 +104,10 @@ const Cart = ({ props }: Props) => {
             })}
           </div>
         )}
-        {cart.length > 0 ? (
+        {cart.length > 0 && (
           <p className="cart-subtotal">
             Subtotal: <span>PHP {subTotal.toLocaleString("en-US")}</span>
           </p>
-        ) : (
-          <></>
         )}
         <div className="btn-ctn">
           {cart && <button className="cart-checkout">checkout</button>}
@@ -239,7 +237,7 @@ const CartModal = styled(motion.div)`
           width: 190px;
           text-overflow: ellipsis;
           @media only screen and (max-width: 850px) {
-            width: 170px;
+            width: 160px;
           }
         }
       }
