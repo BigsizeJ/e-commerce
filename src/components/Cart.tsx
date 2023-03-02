@@ -7,8 +7,8 @@ import { StoreAction } from "../context/StoreContext";
 
 interface Props {
   props: {
-    cart: boolean;
-    showCart: Dispatch<SetStateAction<boolean>>;
+    showCart: boolean;
+    setShowCart: Dispatch<SetStateAction<boolean>>;
   };
 }
 
@@ -113,7 +113,7 @@ const Cart = ({ props }: Props) => {
         )}
         <div className="btn-ctn">
           {cart && <button className="cart-checkout">checkout</button>}
-          <button className="close" onClick={() => props.showCart(false)}>
+          <button className="close" onClick={() => props.setShowCart(false)}>
             Close
           </button>
         </div>
@@ -184,12 +184,6 @@ const CartModal = styled(motion.div)`
       text-transform: uppercase;
       cursor: pointer;
       transition: 200ms ease-in-out;
-      &:hover {
-        transform: scale(1.05);
-      }
-      &:active {
-        transform: scale(1);
-      }
     }
     .cart-checkout {
       background-color: #00ffd1;

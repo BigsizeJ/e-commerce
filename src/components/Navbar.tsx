@@ -4,9 +4,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import Cart from "./Cart";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { useStore } from "../hooks/customHooks";
 
 const Navbar = () => {
-  const [cart, showCart] = useState<boolean>(false);
+  const { cart } = useStore();
+  const [showCart, setShowCart] = useState<boolean>(false);
   return (
     <Wrapper>
       <nav>
@@ -17,13 +19,18 @@ const Navbar = () => {
           <li>
             <Link to={"/shop"}>Shop</Link>
             <Link to={"/about"}>About</Link>
-            <button className="cart" onClick={() => showCart(true)}>
+            <button className="cart" onClick={() => setShowCart(true)}>
+              {cart.length >= 1 && (
+                <div className="cart-prod-length">
+                  <p>{cart.length}</p>
+                </div>
+              )}
               <FaShoppingCart />
             </button>
           </li>
         </ul>
         <AnimatePresence mode="wait">
-          {cart && <Cart props={{ cart, showCart }} />}
+          {showCart && <Cart props={{ showCart, setShowCart }} />}
         </AnimatePresence>
       </nav>
     </Wrapper>
@@ -51,6 +58,7 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     background: black;
+
     .logo {
       font-family: PoppinsBold;
       font-size: 2.5rem;
@@ -65,13 +73,28 @@ const Wrapper = styled.div`
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 55px;
-          height: 55px;
+          width: 60px;
+          height: 60px;
           border: none;
           border-radius: 50px;
           background-color: whitesmoke;
           transition: transform 200ms ease-in-out;
+          position: relative;
           cursor: pointer;
+          .cart-prod-length {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            inset: 0 0 0 0;
+            transform: translateX(-8px) translateY(30px);
+            position: absolute;
+            background-color: #00ffd1;
+            width: 30px;
+            height: 30px;
+            font-family: PoppinsBold;
+            font-size: 1rem;
+            border-radius: 50%;
+          }
           svg {
             pointer-events: none;
             color: black;
