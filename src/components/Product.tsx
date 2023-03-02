@@ -151,10 +151,19 @@ const Wrapper = styled.div`
           font-size: 1rem;
           border: none;
           padding: 5px;
-          background-color: black;
-
-          color: white;
+          background-color: transparent;
+          border: 1px solid black;
+          color: black;
           cursor: pointer;
+          transition: 200ms ease-in-out;
+          &:hover {
+            color: white;
+            border: 1px solid transparent;
+            background-color: black;
+          }
+          &:active {
+            transform: scale(0.92);
+          }
         }
       }
     }

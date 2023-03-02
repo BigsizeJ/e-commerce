@@ -49,7 +49,7 @@ const StoreReducer = (state: State, action: Action) => {
       return {
         ...state,
         cart: (state.cart as []).filter((prod: Product) => {
-          prod.title !== action.cart.title;
+          return prod.id !== action.cart.id;
         }),
       };
     case StoreAction.INCREMENT_PRODUCT_CART:
