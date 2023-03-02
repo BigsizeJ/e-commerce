@@ -156,13 +156,15 @@ const Wrapper = styled.div`
           color: black;
           cursor: pointer;
           transition: 200ms ease-in-out;
-          &:hover {
-            color: white;
-            border: 1px solid transparent;
-            background-color: black;
-          }
           &:active {
             transform: scale(0.92);
+          }
+          @media (hover) {
+            &:hover {
+              color: white;
+              border: 1px solid transparent;
+              background-color: black;
+            }
           }
         }
       }
