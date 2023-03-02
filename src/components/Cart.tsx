@@ -241,7 +241,7 @@ const CartModal = styled(motion.div)`
           font-family: PoppinsBold;
           white-space: nowrap;
           overflow: hidden;
-          width: 200px;
+          width: 190px;
           text-overflow: ellipsis;
           @media only screen and (max-width: 850px) {
             width: 170px;
