@@ -10,6 +10,8 @@ interface Product {
   title: string;
   image: string;
   price: string;
+  qty: number;
+  id: string;
 }
 
 interface State {
@@ -20,11 +22,15 @@ interface State {
 export enum StoreAction {
   GET = "get",
   ADD_TO_CART = "addToCart",
+  REMOVE_TO_CART = "removeToCart",
+  INCREMENT_PRODUCT_CART = "incrementProductCart",
+  DECREMENT_PRODUCT_CART = "decrementProductCart",
 }
 
 interface Action {
   type: StoreAction;
-  payload: [] | {};
+  payload: Product[] | null;
+  cart: Product;
 }
 
 const StoreReducer = (state: State, action: Action) => {
@@ -39,6 +45,32 @@ const StoreReducer = (state: State, action: Action) => {
         ...state,
         cart: [action.payload, ...(state.cart as [])],
       };
+    case StoreAction.REMOVE_TO_CART:
+      return {
+        ...state,
+        cart: (state.cart as []).filter((prod: Product) => {
+          prod.title !== action.cart.title;
+        }),
+      };
+    case StoreAction.INCREMENT_PRODUCT_CART:
+      return {
+        ...state,
+        cart: (state.cart as []).map((prod: Product) => {
+          return prod.id === action.cart.id
+            ? { ...prod, qty: prod.qty++ }
+            : prod;
+        }),
+      };
+    case StoreAction.DECREMENT_PRODUCT_CART:
+      return {
+        ...state,
+        cart: (state.cart as []).map((prod: Product) => {
+          return prod.id === action.cart.id
+            ? { ...prod, qty: prod.qty - 1 }
+            : prod;
+        }),
+      };
+
     default:
       return state;
   }

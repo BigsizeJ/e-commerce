@@ -40,12 +40,12 @@ const Wrapper = styled(motion.div)`
   justify-content: space-around;
   margin: auto;
   gap: 50px;
-
   .hero {
     position: relative;
     display: flex;
     flex-direction: column;
     width: 500px;
+    flex: 1;
     p {
       color: #7b7b7b;
       font-size: 1.5rem;

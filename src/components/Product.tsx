@@ -11,6 +11,7 @@ interface Product {
   image: string;
   price: string;
   qty: number;
+  id: string;
 }
 
 interface Prop {
@@ -64,7 +65,7 @@ const Product = ({ props }: Prop) => {
       <div className="prod-grid">
         {products &&
           filteredSearchProducts.map((prod: Product) => (
-            <div className="prod-item">
+            <div className="prod-item" key={prod.id}>
               <div className="prod-img">
                 <img className="prod-img" src={prod.image} alt="" />
               </div>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
 import { useStore } from "../hooks/customHooks";
+import { StoreAction } from "../context/StoreContext";
 
 interface Props {
   props: {
@@ -16,24 +17,45 @@ interface Product {
   image: string;
   price: string;
   qty: number;
+  id: string;
 }
 
 const Cart = ({ props }: Props) => {
-  const { cart } = useStore();
+  const { cart, dispatch } = useStore();
   const [subTotal, setSubtotal] = useState<number>(0);
 
   const sumSubTotal = () => {
     setSubtotal(
       cart.reduce(
         (total: number, prod: Product) =>
-          (total + parseInt(prod.price)) * prod.qty,
+          (total + parseFloat(prod.price)) * prod.qty,
         0
       )
     );
   };
 
+  const handleCartChange = (product: Product, type: string) => {
+    switch (type) {
+      case "reduce":
+        const decrement = product.qty - 1;
+        if (decrement <= 0) {
+          dispatch({ type: StoreAction.REMOVE_TO_CART, cart: product });
+        } else {
+          dispatch({
+            type: StoreAction.DECREMENT_PRODUCT_CART,
+            cart: product,
+          });
+        }
+        break;
+      case "increase":
+        dispatch({ type: StoreAction.INCREMENT_PRODUCT_CART, cart: product });
+        break;
+    }
+  };
+
   useEffect(() => {
     sumSubTotal();
+    return () => {};
   }, [cart]);
 
   return (
@@ -50,17 +72,27 @@ const Cart = ({ props }: Props) => {
         transition={{ duration: 1 }}
       >
         <h1>Your shopping cart</h1>
-        {cart === null ? (
+        {cart.length <= 0 ? (
           <FaShoppingCart />
         ) : (
           <div className="cart-list">
             {cart.map((prod: Product) => {
               return (
-                <div className="cart-item">
+                <div className="cart-item" key={prod.id}>
                   <div className="prod-left">
-                    <button className="reduce">-</button>
+                    <button
+                      className="reduce"
+                      onClick={() => handleCartChange(prod, "reduce")}
+                    >
+                      -
+                    </button>
                     <p className="qty">{prod.qty}</p>
-                    <button className="increase">+</button>
+                    <button
+                      className="increase"
+                      onClick={() => handleCartChange(prod, "increase")}
+                    >
+                      +
+                    </button>
                     <img className="prod-cart-image" src={prod.image} />
                   </div>
                   <div className="prod-info">
@@ -192,10 +224,13 @@ const CartModal = styled(motion.div)`
         display: flex;
         align-items: center;
         button {
-          width: max-content;
-          height: fit-content;
-          background-color: none;
+          align-items: center;
+          display: flex;
+          width: 1.5rem;
+          height: 1.5rem;
+          font-size: 1.5rem;
           border: none;
+          cursor: pointer;
         }
         .prod-cart-image {
           width: 50px;
