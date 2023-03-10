@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Filter from "../components/Filter";
-import Product from "../components/Product";
+import Products from "../components/Products";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -21,7 +21,7 @@ const Store = () => {
       exit={{ opacity: 0, x: 100 }}
     >
       <Filter props={{ search, setSearch }} />
-      <Product props={{ search }} />
+      <Products props={{ search }} />
     </Wrapper>
   );
 };

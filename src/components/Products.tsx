@@ -4,27 +4,14 @@ import ReactLoading from "react-loading";
 import axios from "axios";
 import { useStore } from "../hooks/customHooks";
 import { StoreAction } from "../context/StoreContext";
-import { Product } from "../Types";
+import { useNavigate } from "react-router-dom";
+import { ProductType } from "../Types";
 
-const Product = ({ props }: { props: { search: string } }) => {
+const Products = ({ props }: { props: { search: string } }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [subscribe, setSubscribe] = useState<boolean>(true);
+  const navigate = useNavigate();
   const { products, cart, dispatch } = useStore();
-
-  const addToCart = (product: Product) => {
-    product.qty = 1;
-    const isExisted = cart.filter(
-      (prod: Product) => prod.title === product.title
-    )[0];
-    if (isExisted) {
-      cart.map((prod: Product) => {
-        if (prod.title === product.title)
-          return { ...prod, qty: (prod.qty += 1) };
-      });
-    } else {
-      dispatch({ type: StoreAction.ADD_TO_CART, payload: product });
-    }
-  };
 
   useEffect(() => {
     const fetch = async () => {
@@ -42,9 +29,27 @@ const Product = ({ props }: { props: { search: string } }) => {
     fetch();
 
     return () => setSubscribe(false);
-  });
+  }, []);
 
-  const filteredSearchProducts = (products || []).filter((prod: Product) =>
+  const addToCart = (product: ProductType) => {
+    product.qty = 1;
+    const isExisted = cart.filter(
+      (prod: ProductType) => prod.title === product.title
+    )[0];
+    if (isExisted) {
+      cart.map((prod: ProductType) => {
+        if (prod.title === product.title)
+          return { ...prod, qty: (prod.qty += 1) };
+      });
+    } else {
+      dispatch({ type: StoreAction.ADD_TO_CART, payload: product });
+    }
+  };
+
+  const handleClick = (product: ProductType) =>
+    navigate(`/product/${product.id}`);
+
+  const filteredSearchProducts = (products || []).filter((prod: ProductType) =>
     prod.title.toLowerCase().includes(props.search.toLowerCase())
   );
 
@@ -52,8 +57,12 @@ const Product = ({ props }: { props: { search: string } }) => {
     <Wrapper>
       <div className="prod-grid">
         {products &&
-          filteredSearchProducts.map((prod: Product) => (
-            <div className="prod-item" key={prod.id}>
+          filteredSearchProducts.map((prod: ProductType) => (
+            <div
+              className="prod-item"
+              key={prod.id}
+              onClick={() => handleClick(prod)}
+            >
               <div className="prod-img">
                 <img className="prod-img" src={prod.image} alt="" />
               </div>
@@ -105,6 +114,10 @@ const Wrapper = styled.div`
       flex-direction: column;
       border: 1px solid #e5e5e5;
       border-radius: 10px;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      }
       .prod-img {
         flex: 1;
         display: flex;
@@ -114,6 +127,7 @@ const Wrapper = styled.div`
           padding: 10px;
           width: 150px;
           aspect-ratio: 1/1;
+          object-fit: contain;
         }
       }
       .prod-hero {
@@ -167,4 +181,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default Product;
+export default Products;

@@ -1,5 +1,5 @@
 import React, { createContext, Reducer, useReducer } from "react";
-import { Product } from "../Types";
+import { ProductType } from "../Types";
 
 export const StoreContext = createContext<any>({});
 
@@ -12,14 +12,14 @@ export enum StoreAction {
 }
 
 interface State {
-  products: Product[] | null | {};
-  cart: Product[] | null | {};
+  products: ProductType[] | null | {};
+  cart: ProductType[] | null | {};
 }
 
 interface Action {
   type: StoreAction;
-  payload: Product[] | null;
-  cart: Product;
+  payload: ProductType[] | null;
+  cart: ProductType;
 }
 
 const StoreReducer = (state: State, action: Action) => {
@@ -37,14 +37,14 @@ const StoreReducer = (state: State, action: Action) => {
     case StoreAction.REMOVE_TO_CART:
       return {
         ...state,
-        cart: (state.cart as []).filter((prod: Product) => {
+        cart: (state.cart as []).filter((prod: ProductType) => {
           return prod.id !== action.cart.id;
         }),
       };
     case StoreAction.INCREMENT_PRODUCT_CART:
       return {
         ...state,
-        cart: (state.cart as []).map((prod: Product) => {
+        cart: (state.cart as []).map((prod: ProductType) => {
           return prod.id === action.cart.id
             ? { ...prod, qty: prod.qty++ }
             : prod;
@@ -53,7 +53,7 @@ const StoreReducer = (state: State, action: Action) => {
     case StoreAction.DECREMENT_PRODUCT_CART:
       return {
         ...state,
-        cart: (state.cart as []).map((prod: Product) => {
+        cart: (state.cart as []).map((prod: ProductType) => {
           return prod.id === action.cart.id
             ? { ...prod, qty: prod.qty - 1 }
             : prod;

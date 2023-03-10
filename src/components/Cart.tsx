@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
 import { useStore } from "../hooks/customHooks";
 import { StoreAction } from "../context/StoreContext";
-import { Product } from "../Types";
+import { ProductType } from "../Types";
 
 interface Props {
   props: {
@@ -20,14 +20,14 @@ const Cart = ({ props }: Props) => {
   const sumSubTotal = () => {
     setSubtotal(
       cart.reduce(
-        (total: number, prod: Product) =>
+        (total: number, prod: ProductType) =>
           (total + parseFloat(prod.price)) * prod.qty,
         0
       )
     );
   };
 
-  const handleCartChange = (product: Product, type: string) => {
+  const handleCartChange = (product: ProductType, type: string) => {
     if (type === "increment") {
       return dispatch({
         type: StoreAction.INCREMENT_PRODUCT_CART,
@@ -69,7 +69,7 @@ const Cart = ({ props }: Props) => {
           <FaShoppingCart />
         ) : (
           <div className="cart-list">
-            {cart.map((prod: Product) => {
+            {cart.map((prod: ProductType) => {
               return (
                 <div className="cart-item" key={prod.id}>
                   <div className="prod-left">
